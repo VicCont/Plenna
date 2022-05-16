@@ -74,7 +74,7 @@ foreign key (id_pac) references paciente (id_pac) on delete no action
 create table resp_abierta (
 id_resp_preg_pac int not null generated always as identity ,
 id_preg_pac int not null, 
-resp_preg varchar(100) not null
+resp_preg varchar(100) not null,
 primary key (id_resp_preg_pac), 
 foreign key (id_preg_pac) references preg_pac (id_preg_pac) on delete no action 
 );
