@@ -1,1 +1,2 @@
 3.229.90.61  (puerto 22)
+contraseña BD n0m3l0
