@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'plenna_test',
+        'NAME': 'plenna',
         'USER': 'postgres',
         'PASSWORD': 'n0m3l0',
         'HOST': '3.229.90.61',
