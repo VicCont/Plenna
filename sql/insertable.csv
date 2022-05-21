@@ -1,0 +1,74 @@
+
+Ficha Personal|Nombre|Texto||
+Ficha Personal|Edad|Número||
+Ficha Personal|Ocupación|Texto||
+Ficha Personal|Género|Opción múltiple||Mujer
+Ficha Personal|Género|Opción múltiple||Hombre
+Ficha Personal|Género|Opción múltiple||Mujer Transgénero
+Ficha Personal|Género|Opción múltiple||Hombre Transgénero
+Ficha Personal|Género|Opción múltiple||Género no binario
+Ficha Personal|Sexo asignado al nacer|Opción múltiple||Femenino
+Ficha Personal|Sexo asignado al nacer|Opción múltiple||Masculino
+Ficha Personal|Sexo asignado al nacer|Opción múltiple||Intersexual
+Ficha Personal|¿Tienes alguna de las siguientes enfermedades?|Opción múltiple/input||Hipertensión arterial
+Ficha Personal|¿Tienes alguna de las siguientes enfermedades?|Opción múltiple/input||Diabetes
+Ficha Personal|¿Tienes alguna de las siguientes enfermedades?|Opción múltiple/input||Hipotiroidismo
+Ficha Personal|¿Tienes alguna de las siguientes enfermedades?|Opción múltiple/input||Síndrome de ovario poliquístico
+Ficha Personal|¿Tienes alguna de las siguientes enfermedades?|Opción múltiple/input||Anemia
+Ficha Personal|¿Tienes alguna de las siguientes enfermedades?|Opción múltiple/input||Ninguno
+Ficha Personal|¿Tienes alguna de las siguientes enfermedades?|Opción múltiple/input||Otro
+Ficha Personal|¿Tomas medicamento para eso? |Si/ No||
+Ficha Personal|¿Qué medicamento/s tomas?|Texto||
+Ginecología|Fecha de primer menstruación|Opción múltiple||Antes de los 10 años
+Ginecología|Fecha de primer menstruación|Opción múltiple||De los 10 años a los 14 años
+Ginecología|Fecha de primer menstruación|Opción múltiple||Después de los 14 años
+Ginecología|Fecha de última menstruación|Fecha||
+Ginecología|¿A que edad iniciaste tu vida sexual?|Número||
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Condón
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Sistema de larga duración hormonal (Mirena o Kyleena)
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||DIU de cobre o DIU de plata
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Implante subdérmico
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Anticonceptivos orales combinados
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Anillo vaginal
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Parche
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Inyección
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Ciclo natural
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Espermicidas (lámina, esponja, gel)
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Coitus interruptus / método del retiro / método de la marcha atrás
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Ligación o corte de trompas uterinas
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Vasectomía
+Ginecología|¿Qué método anticonceptivo usas?|Opción múltiple||Ninguno
+Nutrición|Peso|Número||
+Nutrición|Talla|Número||
+Nutrición|¿Cuántos litros de agua tomas al día?|Número||
+Nutrición|¿Haces ejercicio?|Si/ No||
+Nutrición|¿Cuántos días a la semana realizas actividad física / ejercicio?|Número||
+Nutrición|¿Qué tipo de ejercicio haces?|Opción múltiple/input||Caminar
+Nutrición|¿Qué tipo de ejercicio haces?|Opción múltiple/input||Elíptica
+Nutrición|¿Qué tipo de ejercicio haces?|Opción múltiple/input||Bicicleta estática
+Nutrición|¿Qué tipo de ejercicio haces?|Opción múltiple/input||Pesas o ejercicios de fuerza
+Nutrición|¿Qué tipo de ejercicio haces?|Opción múltiple/input||Yoga
+Nutrición|¿Qué tipo de ejercicio haces?|Opción múltiple/input||Actividades al aire libre
+Nutrición|¿Qué tipo de ejercicio haces?|Opción múltiple/input||Otro
+Psicología|¿Cuáles son tus preocupaciones?|Texto||
+Psicología|¿Desde cuándo sientes esto?|Opción múltiple||Hace más de un mes
+Psicología|¿Desde cuándo sientes esto?|Opción múltiple||Hace más de 2 semanas
+Psicología|¿Desde cuándo sientes esto?|Opción múltiple||Hace menos de 2 semanas
+Psicología|¿Cuándo terminas de trabajar te sientes agotado emocionalmente?|Opción múltiple||Siempre
+Psicología|¿Cuándo terminas de trabajar te sientes agotado emocionalmente?|Opción múltiple||Pocas veces
+Psicología|¿Cuándo terminas de trabajar te sientes agotado emocionalmente?|Opción múltiple||Frecuentemente
+Psicología|¿Cuándo terminas de trabajar te sientes agotado emocionalmente?|Opción múltiple||Siempre
+Psicología|¿Consideras que esto afecta tu vida?|Si/ No||
+Sexología|¿Presentas dificultades para llegar al orgasmo?|Si/ No||
+Sexología|¿Cuándo?|Opción múltiple||Siempre
+Sexología|¿Cuándo?|Opción múltiple||En determina circunstancia
+Sexología|¿Cuándo?|Opción múltiple||Otro
+Sexología|¿Estás conforme con tu vida sexual?|Si/ No||
+Sexología|¿Te sientes segura y satisfecha con tu sexualidad?|Si/ No||
+Sueño|¿Cuántas horas duermes por la noche?|Número||
+Sueño|¿Roncas?|Si/ No||
+Sueño|¿Te levantas por la noche?|Opción múltiple||Nunca
+Sueño|¿Te levantas por la noche?|Opción múltiple||Pocas veces
+Sueño|¿Te levantas por la noche?|Opción múltiple||Frecuentemente
+Sueño|¿Te levantas por la noche?|Opción múltiple||Siempre
+Sueño|¿Tienes pesadillas?|Si/ No||
