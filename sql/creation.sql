@@ -47,8 +47,8 @@ foreign key (id_doctor) references doctor (id_doctor) on delete no action ,
 foreign key (id_especialidad) references especialidad (id_especialidad) on delete no action 
 );
 
-CREATE TYPE tipos_input AS ENUM ('number', 'text', 'radio','date','select','select/text');
 
+CREATE TYPE tipos_input AS ENUM ('number', 'text', 'date','radio','select','check','check/text');
 
 create table pregunta(
 id_preg int not null generated always as identity ,
@@ -58,6 +58,7 @@ tipo tipos_input not null,
 primary key (id_preg),
 foreign  key (id_especialidad) references especialidad (id_especialidad) on delete no action 
 );
+
 
 
 create table preg_pac (

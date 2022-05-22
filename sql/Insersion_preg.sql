@@ -1,3 +1,5 @@
+drop table auxiliar ;
+
 create temp table auxiliar(
 id int not null generated always as identity,
 categoria varchar(100),
@@ -24,8 +26,9 @@ select id_especialidad, pregunta ,prueba::tipos_input
 		when tipo ='Si/ No' then 'radio'
 		when tipo='Número' then 'number'
 		when tipo='Texto' then 'text'
-		when tipo='Opción múltiple' then 'select'
-		when tipo='Opción múltiple/input' then 'select/text'
+		when tipo='select' then 'select'
+		when tipo='Opción múltiple' then 'check'
+		when tipo='Opción múltiple/input' then 'check/text'
 		when tipo='Fecha' then 'date'
 	end prueba,
 	tipo, valor 
@@ -35,6 +38,8 @@ order by id_especialidad
 ;
 
 select * from auxiliar ;
+select * from pregunta p 
+
 
 insert into opc_preg (id_preg,resp_opc_preg)
 select id_preg ,valor  from auxiliar join pregunta p using (pregunta) where valor is not null ;
@@ -45,4 +50,3 @@ drop table auxiliar ;
 
 select * from especialidad e ;
 
-SELECT * FROM pg_stat_activity WHERE state = 'active';
