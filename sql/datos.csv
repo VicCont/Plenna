@@ -1,0 +1,74 @@
+"id_preg"|"id_especialidad"|"respondida"|"pregunta"|"resp_preg"|"tipo"
+1|1|0|¿Cuándo?|"3,Siempre"|check/text
+1|1|0|¿Cuándo?|"2,En determina circunstancia"|check/text
+1|1|1|¿Cuándo?|"1,Otro"|check/text
+2|1|0|¿Estás conforme con tu vida sexual?||radio
+3|1|0|¿Te sientes segura y satisfecha con tu sexualidad?||radio
+4|1|0|¿Presentas dificultades para llegar al orgasmo?||radio
+5|2|0|¿Haces ejercicio?||radio
+6|2|1|Talla|hola|number
+7|2|0|¿Qué tipo de ejercicio haces?|"10,Caminar"|check/text
+7|2|0|¿Qué tipo de ejercicio haces?|"5,Actividades al aire libre"|check/text
+7|2|0|¿Qué tipo de ejercicio haces?|"6,Yoga"|check/text
+7|2|0|¿Qué tipo de ejercicio haces?|"7,Pesas o ejercicios de fuerza"|check/text
+7|2|0|¿Qué tipo de ejercicio haces?|"9,Elíptica"|check/text
+7|2|1|¿Qué tipo de ejercicio haces?|"4,Otro"|check/text
+7|2|0|¿Qué tipo de ejercicio haces?|"8,Bicicleta estática"|check/text
+8|2|1|¿Cuántos días a la semana realizas actividad física / ejercicio?|adios|number
+9|2|1|¿Cuántos litros de agua tomas al día?|meperdonas|number
+10|2|1|Peso|bimbo|number
+11|3|0|¿Consideras que esto afecta tu vida?||radio
+12|3|1|¿Cuáles son tus preocupaciones?|owo|text
+13|3|1|¿Cuándo terminas de trabajar te sientes agotado emocionalmente?|"11,Siempre"|select
+13|3|0|¿Cuándo terminas de trabajar te sientes agotado emocionalmente?|"13,Pocas veces"|select
+13|3|0|¿Cuándo terminas de trabajar te sientes agotado emocionalmente?|"12,Frecuentemente"|select
+13|3|0|¿Cuándo terminas de trabajar te sientes agotado emocionalmente?|"14,Siempre"|select
+14|3|0|¿Desde cuándo sientes esto?|"17,Hace más de un mes"|select
+14|3|0|¿Desde cuándo sientes esto?|"16,Hace más de 2 semanas"|select
+14|3|1|¿Desde cuándo sientes esto?|"15,Hace menos de 2 semanas"|select
+15|4|0|¿Tomas medicamento para eso? ||radio
+16|4|0|Género|"20,Mujer Transgénero"|select
+16|4|1|Género|"18,Género no binario"|select
+16|4|0|Género|"22,Mujer"|select
+16|4|0|Género|"21,Hombre"|select
+16|4|0|Género|"19,Hombre Transgénero"|select
+17|4|1|Nombre|prueba|text
+18|4|1|Ocupación|respuesta 3|text
+19|4|1|Sexo asignado al nacer|"23,Intersexual"|select
+19|4|0|Sexo asignado al nacer|"25,Femenino"|select
+19|4|0|Sexo asignado al nacer|"24,Masculino"|select
+20|4|1|¿Qué medicamento/s tomas?|respuesta 7|text
+21|4|0|¿Tienes alguna de las siguientes enfermedades?|"27,Ninguno"|check
+21|4|1|¿Tienes alguna de las siguientes enfermedades?|"26,Otro"|check
+21|4|0|¿Tienes alguna de las siguientes enfermedades?|"31,Diabetes"|check
+21|4|0|¿Tienes alguna de las siguientes enfermedades?|"29,Síndrome de ovario poliquístico"|check
+21|4|0|¿Tienes alguna de las siguientes enfermedades?|"32,Hipertensión arterial"|check
+21|4|0|¿Tienes alguna de las siguientes enfermedades?|"30,Hipotiroidismo"|check
+21|4|0|¿Tienes alguna de las siguientes enfermedades?|"28,Anemia"|check
+22|4|0|Edad||number
+23|5|0|¿Roncas?||radio
+24|5|0|¿Cuántas horas duermes por la noche?||number
+25|5|0|¿Te levantas por la noche?|"34,Frecuentemente"|select
+25|5|1|¿Te levantas por la noche?|"33,Siempre"|select
+25|5|0|¿Te levantas por la noche?|"36,Nunca"|select
+25|5|0|¿Te levantas por la noche?|"35,Pocas veces"|select
+26|5|0|¿Tienes pesadillas?||radio
+27|6|1|Fecha de primer menstruación|"37,Después de los 14 años"|select
+27|6|0|Fecha de primer menstruación|"38,De los 10 años a los 14 años"|select
+27|6|0|Fecha de primer menstruación|"39,Antes de los 10 años"|select
+28|6|0|Fecha de última menstruación||date
+29|6|0|¿Qué método anticonceptivo usas?|"47,Parche"|check
+29|6|0|¿Qué método anticonceptivo usas?|"41,Vasectomía"|check
+29|6|0|¿Qué método anticonceptivo usas?|"53,Condón"|check
+29|6|0|¿Qué método anticonceptivo usas?|"52,Sistema de larga duración hormonal (Mirena o Kyleena)"|check
+29|6|0|¿Qué método anticonceptivo usas?|"49,Anticonceptivos orales combinados"|check
+29|6|1|¿Qué método anticonceptivo usas?|"40,Ninguno"|check
+29|6|0|¿Qué método anticonceptivo usas?|"45,Ciclo natural"|check
+29|6|0|¿Qué método anticonceptivo usas?|"43,Coitus interruptus / método del retiro / método de la marcha atrás"|check
+29|6|0|¿Qué método anticonceptivo usas?|"48,Anillo vaginal"|check
+29|6|0|¿Qué método anticonceptivo usas?|"44,Espermicidas (lámina, esponja, gel)"|check
+29|6|0|¿Qué método anticonceptivo usas?|"50,Implante subdérmico"|check
+29|6|0|¿Qué método anticonceptivo usas?|"51,DIU de cobre o DIU de plata"|check
+29|6|0|¿Qué método anticonceptivo usas?|"42,Ligación o corte de trompas uterinas"|check
+29|6|0|¿Qué método anticonceptivo usas?|"46,Inyección"|check
+30|6|0|¿A que edad iniciaste tu vida sexual?||number

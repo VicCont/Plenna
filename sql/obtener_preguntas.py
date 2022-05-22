@@ -52,3 +52,4 @@ file1 = open("insertable.csv", "w")  # write mode
 file1.write(imprimible)
 file1.close()
 
+
