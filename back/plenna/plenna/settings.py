@@ -76,11 +76,14 @@ WSGI_APPLICATION = 'plenna.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'plenna',
+        'USER': 'postgres',
+        'PASSWORD': 'n0m3l0',
+        'HOST': '3.229.90.61',
+        'PORT': '',
+        }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
