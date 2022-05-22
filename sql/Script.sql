@@ -59,7 +59,7 @@ END;
  $$
 LANGUAGE plpgsql;
 
-
+--query que recibe usuario y contrasenia y regresa id doctor
 CREATE or replace function   login (usu varchar, hash varchar )
  returns int
  as
@@ -76,16 +76,31 @@ END;
  $$
 LANGUAGE plpgsql;
 
+--query q recibe usuario y contrasenia y regresa id_doctor solo si su atributo admin es verdadero
 CREATE or replace function   login_admin (usu varchar, hash varchar )
  returns int
  as
 $$
 declare id_doc int;
 begin
-	select login(usu,hash) into id_doc ;
-	select * from doctor d where d.id_doctor =id_doc and d."admin" into id_doc  ;
+	select login(usu,hash) into id_doc;
+	select id_doctor from doctor d where d.id_doctor =id_doc and d."admin" into id_doc ;
 
    return id_doc  ;
+END;
+ $$
+LANGUAGE plpgsql;
+
+--query q recibe id_doc y regresa todos los pacientes que tienen una relacion activa de "permisos" con dicho doctor
+CREATE or replace function get_pacientes (id_doctor_in int)
+	returns TABLE(id_pacientes int)
+	as
+$$
+begin
+	return query
+	select distinct p.id_pac 
+	from paciente p join permisos pe using(id_pac) join doctor d using (id_doctor)
+	where d.id_doctor = id_doctor_in and pe.activo;
 END;
  $$
 LANGUAGE plpgsql;
