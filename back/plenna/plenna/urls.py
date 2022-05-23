@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from administracion import views as adminViews, urls as urlsAdmin
+from back.plenna.administracion import views
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('doctor/insights', views.insights, name='insights'),
     path("",adminViews.index,name='index'),
     path('administracion/', include('administracion.urls')),   
 
