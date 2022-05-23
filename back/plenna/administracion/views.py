@@ -48,7 +48,7 @@ def pacientes_doc(request):
     pass
 
 def insights(request):
-    pass
+    return render(request, 'insights.html')
 
 def consulta_insight(request):
     pass
