@@ -77,7 +77,17 @@ WSGI_APPLICATION = 'plenna.wsgi.application'
 
 
 DATABASES = {
-
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'plenna',
+        'OPTIONS': {
+                'options': '-c search_path=plenna'
+            },        
+        'USER': 'postgres',
+        'PASSWORD': 'n0m3l0',
+        'HOST': '3.229.90.61',
+        'PORT': '5432',
+        }
 }
 
 # Password validation
