@@ -9,8 +9,6 @@ from django.http import HttpResponse
 def index(request):
     return render(request, 'index.html')
 
-def login_doc_bd(usu,passw):
-    return (usu=='hola' and passw=='bimbo')
 
 def login(request):
     if request.method == 'POST':
@@ -39,11 +37,11 @@ def doctor(request):
         if(id is None):
             request.method='GET'
             return redirect('/login')
-        return render(request,'vista_doc.html',{'admin':request.COOKIES.get('is_admin')})
+        resp=request.COOKIES.get('is_admin')            
+        return render(request,'vista_doc.html',{'is_admin':resp})
         
     except Exception as e:
-        pass
-        ##return redirect('/login')
+        return redirect('/login')
 
 def login_doc_gral(request):
     if request.method == 'POST':
@@ -51,7 +49,7 @@ def login_doc_gral(request):
         passw=request.POST['pass']
         id=login_adm(usu,passw)
         if (id is not None and id>0):
-            response= render(request,'vista_doc.html')
+            response=redirect('/administrar')
             response.set_cookie('id_doc', id)
             response.set_cookie('is_admin',True)
             return response
@@ -59,10 +57,13 @@ def login_doc_gral(request):
         try:
             id=request.COOKIES.get('id_doc')
             if(id is None):
-                return render(request,'login.html')
-            return redirect('/doctor')
+                return render(request,'login.html',{'is_admin':True})
+            admin=request.COOKIES.get('is_admin')
+            if (admin is None or not admin):
+                return render(request,'login.html',{'is_admin':True})
+            return render(request,'vista_doc.html',{'is_admin':admin})
         except:
-                return render(request,'login.html')
+                return render(request,'login.html',{'is_admin':True})
 
     try:
         id=request.COOKIES.get('id_doc')
@@ -74,6 +75,19 @@ def login_doc_gral(request):
         return redirect('/loginA')
     except:
         return redirect('/loginA')
+
+def administrar(request):
+    try:
+        id=request.COOKIES.get('id_doc')
+        if(id is None):
+            request.method='GET'
+            return redirect('/loginA')
+        admin=request.COOKIES.get('is_admin')
+        if (admin is None or not admin):
+            return redirect('/loginA')
+        return render(request,'vista_doc.html',{'is_admin':admin})
+    except Exception as e:
+        return redirect('/login')    
 
 def prueba(request):
     pass
@@ -94,8 +108,13 @@ def insights(request):
     datos={'pacientes':get_pacientes_doc(id)}
     return render(request, 'insights.html',datos)
 
-def consulta_insight(request):
-    pass
+def consulta_insight(request,id_pac):
+    id=request.COOKIES.get('id_doc')
+    if(id is None):
+        return redirect('/login')
+    datos=get_insights(id_pac)
+    contexto={'id_pac':id_pac,'datos':datos}
+    return render(request,'consulta_insight.html',contexto)
 
 def crea_insight(request):
     pass

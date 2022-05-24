@@ -2,7 +2,7 @@
 
 {% block opciones %}
 <li class="nav-item-wrapper"><a href="/doctor" class="nav-link">Sección de Doctores</a></li>
-<li class="nav-item-wrapper"><a href="/administracion" class="nav-link">Administrador</a></li><li class="nav-item-wrapper last"><a href="https://www.soyplenna.com/servicios" class="button-primary header-button full-width w-button">Agenda tu cita</a></li>
+<li class="nav-item-wrapper"><a href="/administrar" class="nav-link">Administrador</a></li><li class="nav-item-wrapper last"><a href="https://www.soyplenna.com/servicios" class="button-primary header-button full-width w-button">Agenda tu cita</a></li>
 
 {% endblock %}
 {% load static %}
@@ -11,9 +11,15 @@
 <script async="" src="{% static 'index_plenna_files/validacion.js'%}"></script>
 <div class="section home-hero wf-section">
     <div class="container-default w-container"><div class="column-grid home-hero">
-        <h4>Para continuar debemos asegurarnos de que eres un(a) Doctor(a)</h4>
+        <h4>Para continuar debemos asegurarnos de que eres un(a) 
+            {% if is_admin %}
+            Dra. general
+            {% else  %}
+            Doctora
+            {% endif %}
+</h4>
         <div class="split-content home-hero-left">
-            <form action="/login" method="post">{% csrf_token %}
+            <form action="{% if is_admin %}{% url 'administracion:loginA'%}{% else  %}{% url 'administracion:login'%}{% endif %}" method="post">{% csrf_token %}
                 <label for="fname">Usuario:</label>
                 <input type="text" id="usu" name="usu"><br><br>
                 <label for="lname">Contraseña:</label>
