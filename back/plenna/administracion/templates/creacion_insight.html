@@ -1,4 +1,6 @@
 {% extends "index_plenna.html" %}
+{% load static %}
+
 {% block opciones %}
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_pacientes'%}" class="nav-link">Ver pacientes</a></li>
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_insights'%}" class="nav-link">Ver Insights</a></li>
@@ -6,6 +8,7 @@
 {% if is_admin == True %}
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_Dgral'%}" class="nav-link">Administrar</a></li>
 {% endif %}
+<li class="nav-item-wrapper"><a href="{% url 'administracion:doctor'%}" class="nav-link">Volver a Doctor</a></li>
 <li class="nav-item-wrapper"><a href="{% url 'administracion:logout'%}" class="nav-link">Salir</a></li>
 
 <li class="nav-item-wrapper last"></li>
@@ -14,20 +17,20 @@
 {% endblock %}
 
 {% block contenido %}
+<script async="" src="{% static 'index_plenna_files/validacion.js'%}"></script>
 <div class="section home-hero wf-section">
     <div class="container-default w-container"><div class="column-grid home-hero">
-        <div class="split-content home-hero-left"><h1>Bienvenida:
-            {% if  is_admin == True %}
-            Dra. general
-            {% else  %}
-            Doctora
-            {% endif %}
-        </h1>
-            <h1 class="heading">#Soy Plenna cuando <span class="home-hero-underline">las&nbsp;cuido</span></h1><p class="paragraph-2">Has iniciado sesión, ya puedes seguir cuidando a tus pacientes</p><div class="_2-button-wrap"><a href="/pacientes" class="button-primary _2-buttons w-button">Ver pacientes</a>
-                {% if is_admin %}
-                <a href="{% url  'administracion:vista_Dgral'%}" class="button-secondary w-button">Administrador</a>{% endif %}
-            
+        <h4>Estas a punto de generar un insight para la paciente: {{nombre}}</h4>
+        <div class="split-content home-hero-left">
+            <form action="{% url 'administracion:crear_insight' id_pac=id_pac nombre=nombre%}" method="post">{% csrf_token %}
+                <label for="fname">Insight:</label>
+                <textarea  id="insight" name="insight" rows="10" cols="50"></textarea>
+                <br>
+                <input type="submit">
+                <input type="reset">
+            </form>            
             </div></div></div></div></div>
+</div>
 
 
 {% endblock %}

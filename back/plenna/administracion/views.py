@@ -1,10 +1,11 @@
 from urllib import response
+from xmlrpc.client import boolean
 from django.shortcuts import redirect, render
 from sympy import re
-from administracion.bd_raw import login_adm,login_doc,get_insights,get_pacientes_doc
+from administracion.bd_raw import *
 # Create your views here.
 from django.http import HttpResponse
-
+from django.contrib import messages
 
 def index(request):
     return render(request, 'index.html')
@@ -38,7 +39,7 @@ def doctor(request):
             request.method='GET'
             return redirect('/login')
         resp=request.COOKIES.get('is_admin')            
-        return render(request,'vista_doc.html',{'is_admin':resp})
+        return render(request,'vista_doc.html',{'is_admin':bool(resp)})
         
     except Exception as e:
         return redirect('/login')
@@ -53,6 +54,9 @@ def login_doc_gral(request):
             response.set_cookie('id_doc', id)
             response.set_cookie('is_admin',True)
             return response
+        else:
+            messages.add_message(request, messages.INFO, 'Inicio de sesión invalido')
+            return render(request,'login.html',{'is_admin':True})
     else:
         try:
             id=request.COOKIES.get('id_doc')
@@ -61,20 +65,10 @@ def login_doc_gral(request):
             admin=request.COOKIES.get('is_admin')
             if (admin is None or not admin):
                 return render(request,'login.html',{'is_admin':True})
-            return render(request,'vista_doc.html',{'is_admin':admin})
+            return render(request,'vista_doc.html',{'is_admin':bool(admin)})
         except:
                 return render(request,'login.html',{'is_admin':True})
 
-    try:
-        id=request.COOKIES.get('id_doc')
-        if(id is None):
-            return redirect('/loginA')
-        admin=request.COOKIES.get("is_adim")
-        if (admin):
-            return render(request,'vista_doc.html')
-        return redirect('/loginA')
-    except:
-        return redirect('/loginA')
 
 def administrar(request):
     try:
@@ -85,7 +79,7 @@ def administrar(request):
         admin=request.COOKIES.get('is_admin')
         if (admin is None or not admin):
             return redirect('/loginA')
-        return render(request,'vista_doc.html',{'is_admin':admin})
+        return render(request,'vista_doc.html',{'is_admin':bool(admin)})
     except Exception as e:
         return redirect('/login')    
 
@@ -93,7 +87,15 @@ def prueba(request):
     pass
 
 def pacientes_doc(request):
-    pass
+    try:
+        id=request.COOKIES.get('id_doc')
+        if(id is None):
+            request.method='GET'
+            return redirect('/login')
+        datos={'pacientes':get_pacientes_doc(id),'is_admin':bool(request.COOKIES.get('is_admin')),'tipo':0}
+        return render(request, 'pacientes_doctor.html',datos)
+    except Exception as e:
+        return redirect('/login')    
 
 def logout(request):
     response=redirect("/")
@@ -102,22 +104,44 @@ def logout(request):
     return response
 
 def insights(request):
-    id=request.COOKIES.get('id_doc')
-    if(id is None):
-        return redirect('/login')
-    datos={'pacientes':get_pacientes_doc(id)}
-    return render(request, 'insights.html',datos)
+    try:
+        id=request.COOKIES.get('id_doc')
+        if(id is None):
+            request.method='GET'
+            return redirect('/login')
+        datos={'pacientes':get_pacientes_doc(id),'is_admin':bool(request.COOKIES.get('is_admin')),'tipo':1}
+        return render(request, 'pacientes_doctor.html',datos)
+    except Exception as e:
+        return redirect('/login')    
 
-def consulta_insight(request,id_pac):
+def consulta_insight(request,id_pac,nombre):
     id=request.COOKIES.get('id_doc')
     if(id is None):
         return redirect('/login')
     datos=get_insights(id_pac)
-    contexto={'id_pac':id_pac,'datos':datos}
+    contexto={'id_pac':id_pac,'datos':datos,'is_admin':bool(request.COOKIES.get('is_admin')),'nombre':nombre}
     return render(request,'consulta_insight.html',contexto)
 
-def crea_insight(request):
-    pass
+def crea_insight(request, id_pac,nombre):
+    try:
+        id=request.COOKIES.get('id_doc')
+        if(id is None):
+            request.method='GET'
+            return redirect('/login')
+        elif (not is_authorized(id,id_pac)):
+            return redirect('/doctor/insights')
+        if (request.method=='POST'):
+            insight=request.POST['insight']
+            resp=insert_insight(id,id_pac,insight)
+            if resp:
+                messages.add_message(request, messages.INFO, 'Insight insertado con exito')
+                return redirect('administracion:consulta_insight',id_pac=id_pac,nombre=nombre)
+            else:
+                return render(request,'creacion_insight.html',{'nombre':nombre,'id_pac':id_pac,'is_admin':bool(request.COOKIES.get('is_adming'))})
+        else:
+            return render(request,'creacion_insight.html',{'nombre':nombre,'id_pac':id_pac,'is_admin':bool(request.COOKIES.get('is_adming'))})
+    except Exception as e:
+        return redirect('/login')   
 
 def consulta_cuestionario(request):
     pass

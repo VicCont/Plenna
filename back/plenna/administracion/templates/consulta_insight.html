@@ -1,24 +1,61 @@
 {% extends "index_plenna.html" %}
 {% block opciones %}
-<li class="nav-item-wrapper"><a href="{% url 'administracion:vista_pacientes'%]" class="nav-link">Ver pacientes</a></li>
+<li class="nav-item-wrapper"><a href="{% url 'administracion:vista_pacientes'%}" class="nav-link">Ver pacientes</a></li>
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_insights'%}" class="nav-link">Ver Insights</a></li>
-<li class="nav-item-wrapper"><a href="{% url 'administracion:crear_insight' id_pac %}" class="nav-link">Crear Insight</a></li>
-{% if is_admin %}
+<li class="nav-item-wrapper"><a href="{% url 'administracion:crear_insight' id_pac=id_pac nombre=nombre %}" class="nav-link">Crear Insight(para este paciente)</a></li>
+{% if is_admin == True %}
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_Dgral'%}" class="nav-link">Administrar</a></li>
 {% endif %}
+<li class="nav-item-wrapper"><a href="{% url 'administracion:doctor'%}" class="nav-link">Volver a Doctor</a></li>
+
+<li class="nav-item-wrapper"><a href="{% url 'administracion:logout'%}" class="nav-link">Salir</a></li>
+
 <li class="nav-item-wrapper last"></li>
 <a href="https://www.soyplenna.com/servicios" class="button-primary header-button full-width w-button">Agenda tu cita</a></li>
 
 {% endblock %}
 
 {% block contenido %}
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    </style>
 <div class="section home-hero wf-section">
     <div class="container-default w-container"><div class="column-grid home-hero">
         <div class="split-content home-hero-left">
+          {% if messages %}
+          <ul class="messages">
+              {% for message in messages %}
+              <li>{{ message }}</li>
+              {% endfor %}
+          </ul>
+          {% endif %}
+            <table>
+                <tr>
+                    <td>Doctor</td>
+                    <td>Comentario</td>
+                  </tr>
             {% for i in datos %}
-            <li>El doctor {{i.0}} escribio sobre: {{i.1}} lo siguiente: {{i.2}}
-              </li>
+              <tr>
+                <td>{{i.0}}</td>
+                <td>{{i.2}}</td>
+              </tr>
     {% endfor %}
+                </table>
+
         </div></div></div></div></div>
 
 

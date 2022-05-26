@@ -18,6 +18,13 @@
             Doctora
             {% endif %}
 </h4>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
         <div class="split-content home-hero-left">
             <form action="{% if is_admin %}{% url 'administracion:loginA'%}{% else  %}{% url 'administracion:login'%}{% endif %}" method="post">{% csrf_token %}
                 <label for="fname">Usuario:</label>

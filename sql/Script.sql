@@ -60,6 +60,23 @@ END;
 LANGUAGE plpgsql;
 
 
+
+CREATE or replace function   is_authorized (doc int, pac int )
+ returns boolean
+ as
+$$
+declare
+   retorno boolean ; 
+begin
+		select case when count(*)=0 then false else true end from permisos p where id_doctor =doc and id_pac =pac and activo 
+		into retorno ;
+	return retorno  ;
+END;
+ $$
+LANGUAGE plpgsql;
+
+select is_authorized(1,1);
+
 CREATE or replace function   login (usu varchar, hash varchar )
  returns int
  as
@@ -105,9 +122,26 @@ LANGUAGE plpgsql;
 select d.nom_doc ,p.nombre ,i.comentario  from insight i join paciente p using (id_pac)
 join doctor d using (id_doctor) where id_pac =2 ;
 
-insert into insight (id_doctor,id_pac,comentario)
-values 
-(1,2,'este wey tiene un perro bonito')
+CREATE or replace function insertar_insight (doc int, pac int, coment varchar )
+ returns boolean
+ as
+$$
+declare authorized boolean;
+begin
+	select is_authorized(doc,pac) into authorized;
+	if authorized  then
+	     insert into insight (id_doctor,id_pac,comentario)
+	     values (doc,pac,coment);
+	  end if;
+	 return authorized ;
+END;
+ $$
+LANGUAGE plpgsql;
+
+select * from permisos p ;
+
+select is_authorized (1,2);
+select insertar_insight (1,2,'ya no tiene perro bonito');
 
 
 select login('doctor 2','basura');
@@ -169,7 +203,6 @@ begin
 end;
 $$ language plpgsql ;
 
-delete from resp_abierta 
 
 select * from pregunta p where tipo='select';
 
