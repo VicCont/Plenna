@@ -1,0 +1,74 @@
+{% extends "index_plenna.html" %}
+
+{% block opciones %}
+<li class="nav-item-wrapper"><a href="{% url 'administracion:vista_pacientes'%}" class="nav-link">Ver pacientes</a></li>
+<li class="nav-item-wrapper"><a href="{% url 'administracion:vista_insights'%}" class="nav-link">Ver Insights</a></li>
+{% if is_admin == True %}
+<li class="nav-item-wrapper"><a href="{% url 'administracion:vista_Dgral'%}" class="nav-link">Administrar</a></li>
+{% endif %}
+<li class="nav-item-wrapper"><a href="{% url 'administracion:doctor'%}" class="nav-link">Volver a Doctor</a></li>
+<li class="nav-item-wrapper"><a href="{% url 'administracion:logout'%}" class="nav-link">Salir</a></li>
+
+<li class="nav-item-wrapper last"></li>
+<a href="https://www.soyplenna.com/servicios" class="button-primary header-button full-width w-button">Agenda tu cita</a></li>
+
+{% endblock %}
+{% load static %}
+
+{% block contenido %}
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  </style>
+<script async="" src="{% static 'index_plenna_files/validacion.js'%}"></script>
+<div class="section home-hero wf-section">
+    <div class="container-default w-container"><div class="column-grid home-hero">
+
+        {% if action == 1 %}
+        <h4>Selecciona los permisos que quieres retirar</h4>
+        {% else %}
+        <h4>Selecciona los permisos que quieres agregar</h4>
+        {% endif %}
+        <div class="split-content home-hero-left">
+        <form action="{% if action == 0 %}{% url 'administracion:conceder_permiso' id_pac=id_pac nom_pac=nom_pac id_doc=id_doc nom_doc=nom_doc %}{%else%}{% url 'administracion:remover_permiso' id_pac=id_pac nom_pac=nom_pac id_doc=id_doc nom_doc=nom_doc %}{%endif%}" method="post">
+            {% csrf_token %}<table>
+            <tr>
+                <td></td>
+                <td>Doctor</td>
+                <td>Paciente</td>
+                <td>Especialidad</td>
+
+              </tr>
+        {% for i in permisos %}
+          <tr>
+            <td><input type="checkbox" name="permiso" id="permiso" value="{{i.0}}"><input type="hidden" value="{{i.0}}" name="hid"></td>
+            <td>{{nom_doc}} </td>
+            <td>{{nom_pac}}</td>
+            <td>{{i.1}}</td>
+          </tr>
+        {% endfor %}
+            </table>
+            <br>
+            <input type="submit">
+            <input type="reset">
+        </form>
+            </div></div></div></div></div>
+
+</div>
+
+
+{% endblock %}
+

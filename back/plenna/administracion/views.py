@@ -79,7 +79,7 @@ def administrar(request):
         admin=request.COOKIES.get('is_admin')
         if (admin is None or not admin):
             return redirect('/loginA')
-        return render(request,'vista_doc.html',{'is_admin':bool(admin)})
+        return render(request,'vista_dra_gral.html',{'is_admin':bool(admin)})
     except Exception as e:
         return redirect('/login')    
 
@@ -149,9 +149,89 @@ def consulta_cuestionario(request):
 def actualiza_cuestionario(request):
     pass
 
-def dar_permiso(request):
-    pass
+def listado_docs_con(request):
+    try:
+        id=request.COOKIES.get('id_doc')
+        if(id is None):
+            request.method='GET'
+            return redirect('/loginA')
+        admin=request.COOKIES.get('is_admin')
+        if (admin is None or not admin):
+            return redirect('/loginA')
+        return render(request,'pacientes_doctor.html',{'is_admin':bool(admin),'pacientes':get_docs(),'tipo':4,'action':0})
+    except Exception as e:
+        return redirect('/login')      
 
-def quitar_permiso(request):
-    pass
+def listado_docs_rem(request):
+    try:
+        id=request.COOKIES.get('id_doc')
+        if(id is None):
+            request.method='GET'
+            return redirect('/loginA')
+        admin=request.COOKIES.get('is_admin')
+        if (admin is None or not admin):
+            return redirect('/loginA')
+        return render(request,'pacientes_doctor.html',{'is_admin':bool(admin),'pacientes':get_docs(),'tipo':4,'action':1})
+    except Exception as e:
+        return redirect('/login')    
+
+def listado_pac_rem(request,id_doc,nom_doc):
+    try:
+        id=request.COOKIES.get('id_doc')
+        if(id is None):
+            request.method='GET'
+            return redirect('/loginA')
+        admin=request.COOKIES.get('is_admin')
+        if (admin is None or not admin):
+            return redirect('/loginA')
+        contexto={'is_admin':bool(admin),'nom_doc':nom_doc,'id_doc':id_doc,'pacientes':get_pacientes_doc(id_doc),'tipo':int(2),'action':1}
+        return render(request,'pacientes_doctor.html',contexto)
+    except Exception as e:
+        return redirect('/login')    
+
+def listado_pac_con(request,id_doc,nom_doc):
+    try:
+        id=request.COOKIES.get('id_doc')
+        if(id is None):
+            request.method='GET'
+            return redirect('/loginA')
+        admin=request.COOKIES.get('is_admin')
+        if (admin is None or not admin):
+            return redirect('/loginA')
+        return render(request,'pacientes_doctor.html',{'is_admin':bool(admin),'nom_doc':nom_doc,'id_doc':id_doc,'pacientes':get_pacientes(),'tipo':3,'action':1})
+    except Exception as e:
+        return redirect('/login')    
+
+def dar_permiso(request,id_doctor,nom_doc,id_pac,nom_pac):
+    try:
+        id=request.COOKIES.get('id_doc')
+        if(id is None):
+            request.method='GET'
+            return redirect('/loginA')
+        admin=request.COOKIES.get('is_admin')
+        if (admin is None or not admin):
+            return redirect('/loginA')
+        return render(request,'vista_dra_gral.html',{'is_admin':bool(admin),'permisos':get_permisos(id_doctor,id_pac)})
+    except Exception as e:
+        return redirect('/login')    
+
+
+def quitar_permiso(request,id_doc,nom_doc,id_pac,nom_pac):
+    try:
+        id=request.COOKIES.get('id_doc')
+        if(id is None):
+            request.method='GET'
+            return redirect('/loginA')
+        admin=request.COOKIES.get('is_admin')
+        if (admin is None or not admin):
+            return redirect('/loginA')
+        if request.method=='GET':
+            return render(request,'permisos.html',{'is_admin':bool(admin),'action':1,'permisos':get_permisos(id_doc,id_pac),'nom_doc':nom_doc,'id_doc':id_doc,'nom_pac':nom_pac,'id_pac':id_pac})
+        else:
+            seleccionados=request.POST.getlist('permiso')
+            remueve_permisos(id_doc,id_pac,seleccionados)
+            return HttpResponse("jalo")
+
+    except Exception as e:
+        return redirect('/login')    
 

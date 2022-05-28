@@ -1,5 +1,18 @@
 from django.db import connection
 
+def get_permisos(id_doc,id_pac):
+    retorno=[]
+    with connection.cursor() as cursor:
+        cursor.execute('''select * from get_permisos(%s,%s)''',[id_doc,id_pac])
+        retorno=cursor.fetchall()
+    return retorno
+
+def get_permisos_doc(id_doc):
+    retorno=[]
+    with connection.cursor() as cursor:
+        cursor.execute('''select * from get_permisos_doc(%s)''',[id_doc])
+        retorno=cursor.fetchall()
+    return retorno
 
 def get_insights(id_pac):
     retorno=[]
@@ -8,6 +21,20 @@ def get_insights(id_pac):
         retorno=cursor.fetchall()
     return retorno
 
+def get_docs():
+    retorno=[]
+    with connection.cursor() as cursor:
+        cursor.execute('''select * from get_docs()''')
+        retorno=cursor.fetchall()
+    return retorno
+
+def remueve_permisos(id_doc,id_pac,lista):
+    retorno=[]
+    with connection.cursor() as cursor:
+        cursor.execute('''select remueve_permisos(%s,%s,%s::int[])''',[id_doc,id_pac,list(lista)])
+        retorno=cursor.fetchall()
+    return retorno     
+
 def get_pacientes_doc(id_doc):
     retorno=[]
     with connection.cursor() as cursor:
@@ -15,6 +42,12 @@ def get_pacientes_doc(id_doc):
         retorno=cursor.fetchall()
     return retorno 
 
+def get_pacientes():
+    retorno=[]
+    with connection.cursor() as cursor:
+        cursor.execute('''select id_pac, nombre,clave_pac from paciente p''')
+        retorno=cursor.fetchall()
+    return retorno 
 
 def login_doc(usu,passw):
     id=None

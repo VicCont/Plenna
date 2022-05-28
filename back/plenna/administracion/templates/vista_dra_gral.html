@@ -1,0 +1,32 @@
+{% extends "index_plenna.html" %}
+{% block opciones %}
+<li class="nav-item-wrapper"><a href="{% url 'administracion:vista_pacientes'%}" class="nav-link">Ver pacientes</a></li>
+<li class="nav-item-wrapper"><a href="{% url 'administracion:vista_insights'%}" class="nav-link">Ver Insights</a></li>
+
+{% if is_admin == True %}
+<li class="nav-item-wrapper"><a href="{% url 'administracion:vista_Dgral'%}" class="nav-link">Administrar</a></li>
+{% endif %}
+<li class="nav-item-wrapper"><a href="{% url 'administracion:logout'%}" class="nav-link">Salir</a></li>
+
+<li class="nav-item-wrapper last"></li>
+<a href="https://www.soyplenna.com/servicios" class="button-primary header-button full-width w-button">Agenda tu cita</a></li>
+
+{% endblock %}
+
+{% block contenido %}
+<div class="section home-hero wf-section">
+    <div class="container-default w-container"><div class="column-grid home-hero">
+        <div class="split-content home-hero-left"><h1>Bienvenida:
+            {% if  is_admin == True %}
+            Dra. general
+            {% else  %}
+            Doctora
+            {% endif %}
+        </h1>
+            <h1 class="heading">Sección de administración </h1><p class="paragraph-2">Selecciona la acción que deseas realizar</p><div class="_2-button-wrap"><a href="{% url  'administracion:listado_docs_perms_rem'%}" class="button-primary _2-buttons w-button">Quitar Permisos</a>
+                <a href="{% url  'administracion:listado_docs_perms_con'%}" class="button-secondary w-button">Dar permisos</a>
+            
+            </div></div></div></div></div>
+
+
+{% endblock %}

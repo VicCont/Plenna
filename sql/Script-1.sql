@@ -31,6 +31,9 @@ begin
 end; $$;
 
 
+SELECT [3,3,4,56];
+
+
 
 
 select * from doctor d 

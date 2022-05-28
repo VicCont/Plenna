@@ -39,22 +39,43 @@
 
         {% if tipo == 0 %}
         <h4>Estos son los pacientes para los que puedes dar consulta</h4>
-        {% else %}
+        {% elif tipo == 1 %}
         <h4>Estos son los pacientes para los que puedes consultar o crear insights</h4>
+        {% elif tipo == 2 %}
+        <h4>Estos son los pacientes sobre los que tiene permisos el doctor: </h4>
+        {% elif tipo == 3 %}
+        <h4>Estos son todos los pacientes disponibles</h4>
+        {% else %}
+        <h4>Este es el listado de todos los doctores de la clinica, para los que puedes {% if action == 0 %}conceder permisos{% else %}retirar permisos{% endif %}</h4>
         {% endif %}
         <div class="split-content home-hero-left">
           <table>
             <tr>
+                {% if tipo != 4%}
                 <td>Clave</td>
                 <td>nombre</td>
+                {% else %}
+                <td>Especialidad</td>
+                <td>nombre</td>                
+                {% endif %}
               </tr>
         {% for i in pacientes %}
           <tr>
             <td>    
                 {% if tipo == 0 %}
                 <a href="{% url 'administracion:consulta_custionarios'  i.0 %}">{{ i.2 }}</a>            </td>
-                {%else%}
+                {% elif tipo == 1 %}
                 <a href="{% url 'administracion:consulta_insight'  id_pac=i.0 nombre=i.1 %}">{{ i.2 }}</a>            </td>
+                {% elif tipo == 2  %}
+                <a href="{% url 'administracion:remover_permiso' id_doc=id_doc nom_doc=nom_doc id_pac=i.0 nom_pac=i.1 %}">{{ i.2 }}</a>            </td>
+                {% elif tipo == 3 %}
+                <a href="{% url 'administracion:conceder_permiso' id_doc=id_doc nom_doc=nom_doc id_pac=i.0 nom_pac=i.1 %}">{{ i.2 }}</a>            </td>
+                {% else  %}
+                {% if action == 0 %}
+                <a href="{% url 'administracion:listado_pacs_perms_con'  id_doc=i.0 nom_doc=i.1 %}">{{ i.2 }}</a>            </td>
+                {% else %}
+                <a href="{% url 'administracion:listado_pacs_perms_rem'  id_doc=i.0 nom_doc=i.1 %}">{{ i.2 }}</a>            </td>
+                {% endif %}
                 {% endif %}                      
             <td>{{ i.1 }}</td>
           </tr>

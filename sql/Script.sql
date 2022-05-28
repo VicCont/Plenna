@@ -23,20 +23,25 @@ LANGUAGE plpgsql;
 
 
 
-
 CREATE or replace function   get_permisos (id_d int, id_p int )
- returns TABLE (especialidades int) 
+ returns TABLE (especialidades int, nom_esp varchar) 
  as
 $$
 begin
 	return query
-	select id_especialidad  from permisos p 
+	select id_especialidad, nombre_esp  from permisos p join especialidad using (id_especialidad)
 	where p.id_doctor =id_d 
 	and p.id_pac =id_pac 
 	and p.activo ;
 END;
  $$
 LANGUAGE plpgsql;
+
+
+	select id_especialidad, e.nombre_esp  from permisos p join especialidad e using (id_especialidad)
+	where p.id_doctor =1 
+	and p.id_pac =2
+	and p.activo ;
 
 CREATE or replace function   del_permiso (id_d int, id_p int,id_es int )
  returns void 
@@ -119,6 +124,36 @@ END;
  $$
 LANGUAGE plpgsql;
 
+CREATE or replace function get_docs ( )
+ returns table (id_doc int, nombre varchar, nom_especialidad varchar)
+ as
+$$
+begin
+	return query
+	select id_doctor,nom_doc,e.nombre_esp  from doctor d join especialidad e using (id_especialidad) where activo ;
+END;
+ $$
+LANGUAGE plpgsql;
+
+select * from get_docs();
+
+CREATE or replace function get_permisos_doc (id int)
+ returns table (id_doc int, nombre varchar, nom_especialidad varchar)
+ as
+$$
+begin
+	return query
+select p2.id_pac, p2.nombre , nombre_esp  from permisos p join especialidad e using (id_especialidad) join paciente p2 using (id_pac) where id_doctor=id and activo ;
+END;
+ $$
+LANGUAGE plpgsql;
+
+
+
+select p2.id_pac, p2.nombre , nombre_esp  from permisos p join especialidad e using (id_especialidad) join paciente p2 using (id_pac) where id_doctor=1 and activo ;
+
+select id_doctor,nom_doc,e.nombre_esp  from doctor d join especialidad e using (id_especialidad) where activo order by e.id_especialidad ;
+
 select d.nom_doc ,p.nombre ,i.comentario  from insight i join paciente p using (id_pac)
 join doctor d using (id_doctor) where id_pac =2 ;
 
@@ -155,7 +190,7 @@ CREATE or replace function obtener_pacientes_doc (id int )
 $$
 begin
 	return query
-	select distinct on (p.id_pac)  p.id_pac , p2.nombre,p2.clave_pac  from permisos p join paciente p2 on (p2.id_pac=p.id_pac and  id_doctor=id);
+	select distinct on (p.id_pac)  p.id_pac , p2.nombre,p2.clave_pac  from permisos p join paciente p2 on (p2.id_pac=p.id_pac and  id_doctor=id) where p.activo ;
 END;
  $$
 LANGUAGE plpgsql;
@@ -226,4 +261,15 @@ create type respuesta_pregunta_cerrada as (
 id_corr int,
 id_resp int
 );
+
+CREATE or replace function remueve_permisos (id_doct int, id_paciente int,lista_perm int[] )
+returns void
+as $$ 
+begin 
+update permisos set activo =false where id_doctor =id_doct  and id_pac =id_paciente  and id_especialidad = any (lista_perm);
+end;
+$$ language plpgsql ;
+
+select * from permisos p join especialidad e using (id_especialidad) ;
+
 
