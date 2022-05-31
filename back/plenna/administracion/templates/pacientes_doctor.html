@@ -3,7 +3,7 @@
 {% block opciones %}
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_pacientes'%}" class="nav-link">Ver pacientes</a></li>
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_insights'%}" class="nav-link">Ver Insights</a></li>
-{% if is_admin == True %}
+{% if is_admin %}
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_Dgral'%}" class="nav-link">Administrar</a></li>
 {% endif %}
 <li class="nav-item-wrapper"><a href="{% url 'administracion:doctor'%}" class="nav-link">Volver a Doctor</a></li>
@@ -63,7 +63,7 @@
           <tr>
             <td>    
                 {% if tipo == 0 %}
-                <a href="{% url 'administracion:consulta_custionarios'  i.0 %}">{{ i.2 }}</a>            </td>
+                <a href="{% url 'administracion:consulta_custionarios' nom_pac=i.1 id_pac=i.0 %}">{{ i.2 }}</a>            </td>
                 {% elif tipo == 1 %}
                 <a href="{% url 'administracion:consulta_insight'  id_pac=i.0 nombre=i.1 %}">{{ i.2 }}</a>            </td>
                 {% elif tipo == 2  %}

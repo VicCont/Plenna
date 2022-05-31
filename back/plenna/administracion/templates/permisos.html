@@ -3,7 +3,7 @@
 {% block opciones %}
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_pacientes'%}" class="nav-link">Ver pacientes</a></li>
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_insights'%}" class="nav-link">Ver Insights</a></li>
-{% if is_admin == True %}
+{% if is_admin %}
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_Dgral'%}" class="nav-link">Administrar</a></li>
 {% endif %}
 <li class="nav-item-wrapper"><a href="{% url 'administracion:doctor'%}" class="nav-link">Volver a Doctor</a></li>
@@ -35,8 +35,15 @@
   </style>
 <script async="" src="{% static 'index_plenna_files/validacion.js'%}"></script>
 <div class="section home-hero wf-section">
-    <div class="container-default w-container"><div class="column-grid home-hero">
 
+    <div class="container-default w-container"><div class="column-grid home-hero">
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
         {% if action == 1 %}
         <h4>Selecciona los permisos que quieres retirar</h4>
         {% else %}

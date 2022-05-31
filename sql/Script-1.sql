@@ -34,6 +34,12 @@ end; $$;
 SELECT [3,3,4,56];
 
 
+update permisos set activo =false  where id_doctor =1 and id_pac =2 and id_especialidad = any(array [2,4,5])
+
+insert into permisos (id_doctor, id_pac,id_especialidad)
+select 1 ,2 ,e.id_especialidad  from especialidad e left join permisos p ON (id_pac=3 and id_doctor =1 and p.id_especialidad=e.id_especialidad) where id_permiso is null and e.id_especialidad = any(array [2,4,5]);
+
+
 
 
 select * from doctor d 

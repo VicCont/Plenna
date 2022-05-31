@@ -1,4 +1,4 @@
-drop table auxiliar ;
+drop table IF EXISTS auxiliar ;
 
 create temp table auxiliar(
 id int not null generated always as identity,
@@ -15,8 +15,9 @@ FROM '/home/ubuntu/plenna/insertable.csv'
 DELIMITER '|'
 CSV header encoding 'latin1';
 
+
 insert into especialidad (nombre_esp)
-select distinct (categoria) from auxiliar ;
+select distinct on (categoria) categoria from auxiliar   ;
 
 insert into pregunta (id_especialidad ,pregunta ,tipo )
 select id_especialidad, pregunta ,prueba::tipos_input 
@@ -31,22 +32,17 @@ select id_especialidad, pregunta ,prueba::tipos_input
 		when tipo='Opción múltiple/input' then 'check/text'
 		when tipo='Fecha' then 'date'
 	end prueba,
-	tipo, valor 
-	from  auxiliar au join especialidad e on e.nombre_esp=au.categoria 
+	tipo, valor, id
+	from  auxiliar au join especialidad e on e.nombre_esp=au.categoria
 ) as rs 
-order by id_especialidad 
+order by id_especialidad, id
 ;
-
-select * from auxiliar ;
-select * from pregunta p 
-
 
 insert into opc_preg (id_preg,resp_opc_preg)
 select id_preg ,valor  from auxiliar join pregunta p using (pregunta) where valor is not null ;
 
-select * from opc_preg op join pregunta p using (id_preg);
 
 drop table auxiliar ;
 
-select * from especialidad e ;
+
 

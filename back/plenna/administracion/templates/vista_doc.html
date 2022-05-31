@@ -3,7 +3,7 @@
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_pacientes'%}" class="nav-link">Ver pacientes</a></li>
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_insights'%}" class="nav-link">Ver Insights</a></li>
 
-{% if is_admin == True %}
+{% if is_admin %}
 <li class="nav-item-wrapper"><a href="{% url 'administracion:vista_Dgral'%}" class="nav-link">Administrar</a></li>
 {% endif %}
 <li class="nav-item-wrapper"><a href="{% url 'administracion:logout'%}" class="nav-link">Salir</a></li>
@@ -17,15 +17,19 @@
 <div class="section home-hero wf-section">
     <div class="container-default w-container"><div class="column-grid home-hero">
         <div class="split-content home-hero-left"><h1>Bienvenida:
-            {% if  is_admin == True %}
+            {% if is_admin %}
             Dra. general
-            {% else  %}
+            {% else %}
             Doctora
             {% endif %}
         </h1>
-            <h1 class="heading">#Soy Plenna cuando <span class="home-hero-underline">las&nbsp;cuido</span></h1><p class="paragraph-2">Has iniciado sesión, ya puedes seguir cuidando a tus pacientes</p><div class="_2-button-wrap"><a href="/pacientes" class="button-primary _2-buttons w-button">Ver pacientes</a>
+            <h1 class="heading">#Soy Plenna cuando <span class="home-hero-underline">las&nbsp;cuido</span></h1><p class="paragraph-2">Has iniciado sesión, ya puedes seguir cuidando a tus pacientes</p><div class="_2-button-wrap">
+                <a href="{% url  'administracion:vista_pacientes'%}" class="button-primary _2-buttons w-button">Ver pacientes</a>
                 {% if is_admin %}
-                <a href="{% url  'administracion:vista_Dgral'%}" class="button-secondary w-button">Administrador</a>{% endif %}
+                <a href="{% url  'administracion:vista_Dgral'%}" class="button-secondary w-button">Administrador</a>
+                {% else %}
+                <a href="{% url  'administracion:vista_insights'%}" class="button-secondary w-button">Ver Insights</a>
+                {% endif %}
             
             </div></div></div></div></div>
 

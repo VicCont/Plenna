@@ -31,7 +31,7 @@ begin
 	return query
 	select id_especialidad, nombre_esp  from permisos p join especialidad using (id_especialidad)
 	where p.id_doctor =id_d 
-	and p.id_pac =id_pac 
+	and p.id_pac =id_p
 	and p.activo ;
 END;
  $$
@@ -271,5 +271,37 @@ end;
 $$ language plpgsql ;
 
 select * from permisos p join especialidad e using (id_especialidad) ;
+
+CREATE or replace function get_permisos_faltantes (id_doct int, id_paciente int )
+returns TABLE (id_espc int, nombre varchar)
+as $$ 
+begin
+return query 
+select e.id_especialidad,e.nombre_esp  from especialidad e 
+left join permisos p ON (id_pac=id_paciente  and id_doctor =id_doct  and p.id_especialidad=e.id_especialidad) where id_permiso is null or not p.activo ;
+end;
+$$ language plpgsql ;
+
+select * from get_permisos_faltantes (1,1);
+
+
+CREATE or replace function insert_permisos (id_doct int, id_paciente int , lista int[])
+returns void
+as $$ 
+begin
+update permisos set activo =true  where id_doctor =id_doct  and id_pac =id_paciente  and id_especialidad = any(lista);
+
+insert into permisos (id_doctor, id_pac,id_especialidad)
+select id_doct ,id_paciente  ,e.id_especialidad  from especialidad e left join permisos p ON (id_pac=id_paciente  and id_doctor =id_doct  and p.id_especialidad=e.id_especialidad)
+where id_permiso is null and e.id_especialidad = any(lista);
+
+end;
+$$ language plpgsql ;
+
+delete from permisos ;
+
+select insert_permisos (1,2,array[1,2,3,4,5,6])
+
+select e.id_especialidad,e.nombre_esp  from especialidad e left join permisos p ON (id_pac=3 and id_doctor =1 and p.id_especialidad=e.id_especialidad) where id_permiso is null or not p.activo ;
 
 

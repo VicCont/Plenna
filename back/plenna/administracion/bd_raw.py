@@ -7,6 +7,13 @@ def get_permisos(id_doc,id_pac):
         retorno=cursor.fetchall()
     return retorno
 
+def get_permisos_faltantes(id_doc,id_pac):
+    retorno=[]
+    with connection.cursor() as cursor:
+        cursor.execute('''select * from get_permisos_faltantes(%s,%s)''',[id_doc,id_pac])
+        retorno=cursor.fetchall()
+    return retorno
+
 def get_permisos_doc(id_doc):
     retorno=[]
     with connection.cursor() as cursor:
@@ -21,6 +28,13 @@ def get_insights(id_pac):
         retorno=cursor.fetchall()
     return retorno
 
+def obtener_datos(id):
+    retorno=[]
+    with connection.cursor() as cursor:
+        cursor.execute('''select * from obtener_datos(%s)''',[id])
+        retorno=cursor.fetchall()
+    return retorno 
+
 def get_docs():
     retorno=[]
     with connection.cursor() as cursor:
@@ -34,6 +48,13 @@ def remueve_permisos(id_doc,id_pac,lista):
         cursor.execute('''select remueve_permisos(%s,%s,%s::int[])''',[id_doc,id_pac,list(lista)])
         retorno=cursor.fetchall()
     return retorno     
+
+def insert_permisos(id_doc,id_pac,lista):
+    retorno=[]
+    with connection.cursor() as cursor:
+        cursor.execute('''select insert_permisos(%s,%s,%s::int[])''',[id_doc,id_pac,list(lista)])
+        retorno=cursor.fetchall()
+    return retorno   
 
 def get_pacientes_doc(id_doc):
     retorno=[]
