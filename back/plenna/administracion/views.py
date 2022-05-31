@@ -105,7 +105,7 @@ def pacientes_doc(request):
         return redirect('/login')    
 
 def logout(request):
-    response=redirect("/")
+    response=redirect("/login")
     for cookie in request.COOKIES:
         response.delete_cookie(cookie)
     return response
