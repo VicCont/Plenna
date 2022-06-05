@@ -32,6 +32,21 @@ def login(request):
         except:
             return redirect('/login')
 
+
+def visualizaciones(request):
+    try:
+        id=request.COOKIES.get('id_doc')
+        if(id is None):
+            request.method='GET'
+            return redirect('/login')
+        resp=request.COOKIES.get('is_admin')            
+        return render(request,'visualizacion_datos.html',{'is_admin':bool(resp)})
+        
+    except Exception as e:
+        return redirect('/login')
+
+
+
 def doctor(request):
     try:
         id=request.COOKIES.get('id_doc')

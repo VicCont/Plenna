@@ -21,6 +21,8 @@ urlpatterns = [
     path('doctor',views.doctor,name='doctor'),
     path('login', views.login,name='login'),
     path('logout',views.logout,name="logout"),
-    path('loginA', views.login_doc_gral,name='loginA')
+    path('loginA', views.login_doc_gral,name='loginA'),
+    path('doctor/visualizaciones',views.visualizaciones,name='visualizaciones')
+    
     
 ]
