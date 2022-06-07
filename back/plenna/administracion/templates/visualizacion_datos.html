@@ -14,20 +14,35 @@
 {% endblock %}
 
 {% block contenido %}
-<div class="section home-hero wf-section">
-    <div class="container-default w-container"><div class="column-grid home-hero">
-        <div class="split-content home-hero-left"><h1>Bienvenida:
-            {% if  is_admin == True %}
-            Se
-            {% else  %}
-            Doctora
-            {% endif %}
-        </h1>
-            <h1 class="heading">#Soy Plenna cuando <span class="home-hero-underline">las&nbsp;cuido</span></h1><p class="paragraph-2">Has iniciado sesión, ya puedes seguir cuidando a tus pacientes</p><div class="_2-button-wrap"><a href="{% url 'administracion:vista_pacientes'%}" class="button-primary _2-buttons w-button">Ver pacientes</a>
-                {% if is_admin %}
-                <a href="{% url  'administracion:vista_Dgral'%}" class="button-secondary w-button">Administrador</a>{% endif %}
-            
-            </div></div></div></div></div>
+<script type='text/javascript' src='https://prod-useast-a.online.tableau.com/javascripts/api/viz_v1.js'>
+</script>
+<div class='tableauPlaceholder' style='width: 1500px; height: 796px;'>
+    <object class='tableauViz' width='1500' height='796' style='display:none;'>
+        <param name='host_url' value='https%3A%2F%2Fprod-useast-a.online.tableau.com%2F' /> 
+        <param name='embed_code_version' value='3' /> 
+        <param name='site_root' value='&#47;t&#47;visualizacionesplenna' />
+        <param name='name' value='Plenna&#47;Ginecologia' />
+        <param name='tabs' value='no' /><param name='toolbar' value='yes' />
+        <param name='showAppBanner' value='false' />
+    </object></div>
 
+    <script type='text/javascript' src='https://prod-useast-a.online.tableau.com/javascripts/api/viz_v1.js'>
+    </script>
+    <div class='tableauPlaceholder' style='width: 1500px; height: 796px;'>
+        <object class='tableauViz' width='1500' height='796' style='display:none;'>
+            <param name='host_url' value='https%3A%2F%2Fprod-useast-a.online.tableau.com%2F' /> 
+            <param name='embed_code_version' value='3' /> <param name='site_root' value='&#47;t&#47;visualizacionesplenna' />
+            <param name='name' value='Plenna&#47;Nutricion' />
+            <param name='tabs' value='no' />
+            <param name='toolbar' value='yes' />
+            <param name='showAppBanner' value='false' />
+        </object></div>
+    
+        <script type='text/javascript' src='https://prod-useast-a.online.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 1500px; height: 796px;'><object class='tableauViz' width='1500' height='796' style='display:none;'><param name='host_url' value='https%3A%2F%2Fprod-useast-a.online.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='&#47;t&#47;visualizacionesplenna' /><param name='name' value='Plenna&#47;Psicologia' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='showAppBanner' value='false' /></object></div>
+
+        <script type='text/javascript' src='https://prod-useast-a.online.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 1500px; height: 796px;'><object class='tableauViz' width='1500' height='796' style='display:none;'><param name='host_url' value='https%3A%2F%2Fprod-useast-a.online.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='&#47;t&#47;visualizacionesplenna' /><param name='name' value='Plenna&#47;Sexologia' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='showAppBanner' value='false' /></object></div>
+
+        <script type='text/javascript' src='https://prod-useast-a.online.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 1500px; height: 796px;'><object class='tableauViz' width='1500' height='796' style='display:none;'><param name='host_url' value='https%3A%2F%2Fprod-useast-a.online.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='&#47;t&#47;visualizacionesplenna' /><param name='name' value='Plenna&#47;Suenio' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='showAppBanner' value='false' /></object></div>
+        
 
 {% endblock %}
