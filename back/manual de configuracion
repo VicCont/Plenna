@@ -1,0 +1,344 @@
+Instalar SSL
+
+sudo apt-get install -y wget
+
+mkdir openssl
+
+cd openssl
+
+wget https://www.openssl.org/source/openssl-1.0.2q.tar.gz
+
+tar xvf openssl-1.0.2q.tar.gz
+
+cd openssl-1.0.2q
+
+sudo ./config shared
+
+sudo make
+
+sudo make install
+
+ 
+
+Instalar Python
+
+      cd /home/ubuntu
+
+ 
+
+sudo apt-get install -y libpq-dev
+
+ 
+
+sudo apt-get install -y build-essential
+
+sudo apt-get install -y checkinstall
+
+sudo apt-get install  libreadline-gplv2-dev
+
+sudo apt-get install  libncursesw5-dev
+
+sudo apt-get install  libssl-dev
+
+sudo apt-get install -y libsqlite3-dev
+
+sudo apt-get install -y tk-dev
+
+sudo apt-get install -y libgdbm-dev
+
+sudo apt-get install -y libc6-dev
+
+sudo apt-get install  libbz2-dev
+
+ 
+
+sudo apt-get install -y zlib1g
+
+ 
+
+sudo apt-get install zlib1g-dev
+
+ 
+
+sudo apt-get install -y openssl
+
+sudo apt-get install  libffi-dev
+
+sudo apt-get install -y python3-dev
+
+sudo apt-get install -y python3-setuptools
+
+sudo apt-get install -y wget
+
+ 
+
+#*******************************+
+
+sudo apt-get update
+
+sudo apt-get upgrade
+
+sudo apt-get install build-essential python-dev python-setuptools python-pip python-smbus
+
+sudo apt-get install libncursesw5-dev libgdbm-dev libc6-dev
+
+sudo apt-get install zlib1g-dev libsqlite3-dev tk-dev
+
+sudo apt-get install libssl-dev openssl
+
+sudo apt-get install libffi-dev
+
+ 
+
+# Prepare to build
+
+sudo su
+
+ 
+
+mkdir Python3.8
+
+cd Python3.8
+
+# Pull down Python 3.8, build, and install
+
+wget https://www.python.org/ftp/python/3.8.3/Python-3.8.3.tar.xz
+
+tar xvf Python-3.8.3.tar.xz
+
+ 
+
+cd Python-3.8.3/Modules
+
+ 
+
+#Editar el archivo (sin extensión) Setup para quitar líneas comentadas
+
+SSL=/usr/local/ssl
+
+_ssl _ssl.c \
+
+    -DUSE_SSL -I$(SSL)/include -I$(SSL)/include/openssl \
+
+    -L$(SSL)/lib -lssl -lcrypto
+
+ 
+
+cd ../
+
+ 
+
+sudo ./configure --enable-shared
+
+ 
+
+sudo ldconfig
+
+ 
+
+sudo make altinstall
+
+ 
+
+Hacer Python como el default
+
+sudo rm /usr/bin/python
+
+ 
+
+sudo ln -s /usr/local/bin/python3.8 /usr/bin/python
+
+ 
+
+ 
+
+Instalar mod_wsgi
+
+      cd /home/ubuntu
+
+ 
+
+sudo apt-get install apache2 libapache2-mod-wsgi-py3
+
+ 
+
+sudo a2dismod wsgi
+
+ 
+
+sudo apt-get remove libapache2-mod-wsgi-py3
+
+ 
+
+sudo apt install apache2-dev
+
+ 
+
+mkdir wsgi
+
+ 
+
+cd wsgi
+
+ 
+
+      wget https://github.com/GrahamDumpleton/mod_wsgi/archive/4.7.1.tar.gz
+
+ 
+
+               tar xvfz 4.7.1.tar.gz
+
+ 
+
+cd mod_wsgi-4.7.1
+
+ 
+
+sudo ./configure
+
+ 
+
+sudo ldconfig
+
+ 
+
+sudo make
+
+ 
+
+sudo make install
+
+ 
+
+cd /usr/lib/apache2
+
+ 
+
+sudo a2enmod wsgi
+
+ 
+
+sudo service apache2 restart
+
+ 
+
+ 
+
+**************************************************************
+
+# Ejecutar Django desde ambiente virtual
+
+ 
+
+# Instalar virtualenv
+
+sudo pip install virtualenv
+
+ 
+
+# Crear ambiente virtual, desde el directorio en donde tenemos la aplicación
+
+cd /home/Ubuntu/noticias
+
+ 
+
+mkdir noticiasenv
+
+ 
+
+virtualenv noticiasenv
+
+ 
+
+# Luego activamos el ambiente virtual
+
+source noticiasenv/bin/activate
+
+
+ 
+
+
+ 
+
+
+pip install django
+
+ 
+
+**************************************************************
+
+Configurar el firewall
+
+sudo ufw status verbose
+
+ 
+
+sudo ufw enable
+
+ 
+
+sudo ufw allow ssh
+
+sudo ufw allow http
+
+sudo ufw allow https
+
+ 
+
+**************************************************************
+
+ 
+
+sudo chown --recursive :www-data noticias
+
+ 
+
+**************************************************************
+
+**************************************************************
+
+ 
+
+Configurar apache
+
+     
+
+ 
+
+Copiar y configurar Proyecto
+
+               #Se copiar el directorio
+
+               sudo mv noticias /var/www/<sitio>.com
+
+ 
+
+               cd /var/www/<sitio>.com
+
+ 
+
+               # -------------------------------------------------------------------
+
+               # En los archivos noticias/settings.py  editar y cambiar la contraseña de la base de datos
+
+               # -------------------------------------------------------------------
+
+ 
+
+               # -------------------------------------------------------------------
+
+               # Crear la base de datos <sitio>
+
+               # -------------------------------------------------------------------
+
+ 
+
+               sudo python manage.py makemigrations
+
+ 
+
+               sudo pyhton manage.py migrate
+
+ 
+
+               sudo pyhton manage.py runserver 0.0.0.0:8000
