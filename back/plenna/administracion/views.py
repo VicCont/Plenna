@@ -174,13 +174,21 @@ def consulta_cuestionario(request,id_pac,nom_pac):
     pregs=obtener_datos(id_pac)
     perms=get_permisos(id,id_pac)
     perms={x[0]:x[1] for x in perms}
-    imprimible=formatear(pregs,perms,id_pac,nom_pac)
+    imprimible=formatear(request,pregs,perms,id_pac,nom_pac)
     contexto={'id_pac':id_pac,'cuestionario':imprimible,'is_admin':bool_from_String(request.COOKIES.get('is_admin')),'nombre':nom_pac}
     return render(request,'cuestionario.html',contexto)
 
 def responder_cuestionario(request,id_pac,nom_pac,id_esp):
-    pass
-
+    id=request.COOKIES.get('id_doc')
+    if(id is None):
+        return redirect('/login')
+    if (not is_authorized(id,id_pac)):
+        return redirect("administracion:vista_pacientes")
+    if request.method=="GET":
+        return redirect ('administracion:consulta_cuestionarios',nom_pac=nom_pac,id_pac=id_pac)
+    else:
+        actualiza_cuestionario(request,id_esp,id_pac)
+        return redirect ('administracion:consulta_cuestionarios',nom_pac=nom_pac,id_pac=id_pac)
 def listado_docs_con(request):
     try:
         id=request.COOKIES.get('id_doc')
@@ -271,6 +279,5 @@ def quitar_permiso(request,id_doc,nom_doc,id_pac,nom_pac):
             remueve_permisos(id_doc,id_pac,seleccionados)
             messages.add_message(request, messages.INFO, 'Se han quitado con exito los permisos selccionados')
             return redirect('administracion:remover_permiso',id_doc=id_doc,nom_pac=nom_pac,nom_doc=nom_doc,id_pac=id_pac)
-
     except Exception as e:
         return redirect('/login')    

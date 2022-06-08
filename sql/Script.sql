@@ -175,6 +175,7 @@ LANGUAGE plpgsql;
 
 select * from obtener_pacientes_doc(1);
 
+select * from obtener_datos (8);
 
 drop function obtener_datos ;
 CREATE or replace function   obtener_datos (id int )
@@ -214,12 +215,13 @@ create or replace function  inserta_resp_cerrada(id int, lista_preg int[], list_
 returns void 
 as $$
 begin 
-	
+insert into res_preg_opc  (id_preg_pac,id_opc_preg)
+select foranea,aux.valor from inserta_preg_pac (id,lista_preg) as inicial join (select * from unnest (lista_preg) with ordinality as preguntas(valor, llave)) as preguntas
+on inicial.pregunta =preguntas.valor 
+join (select * from  unnest (list_ids_resp) with ordinality as respuestas(valor, llave)) as aux using (llave);
 end;
 $$ language plpgsql ;
 
-
-select * from pregunta p where tipo='select';
 
 select inserta_preg_pac_abierta (1,array [6,8,9,10,12,17,18,20,22,24,28,30],array ['hola','adios','meperdonas','bimbo','owo','prueba','respuesta 3','respuesta 7'])
 
@@ -228,9 +230,9 @@ select * from (select * from unnest([14,16,19,25,27]) with ordinality
 select * from inserta_preg_pac  (1, ARRAY [11,2,5,1,3,2]);
 
 insert into resp_abierta (id_preg_pac,resp_preg)
-select foranea,aux.valor from inserta_preg_pac (1,ARRAY [1,2,2,2,5,1,3,2]) as inicial join (select * from unnest (ARRAY [1,2,2,2,5,1,3,2]) with ordinality as preguntas(valor, llave)) as preguntas
+select foranea,aux.valor from inserta_preg_pac (9,ARRAY [34,35,36]) as inicial join (select * from unnest (ARRAY [34,35,36]) with ordinality as preguntas(valor, llave)) as preguntas
 on inicial.pregunta =preguntas.valor 
-join (select * from  unnest (array['hola','adios','meperdonas','bimbo','owo','prueba']) with ordinality as respuestas(valor, llave)) as aux using (llave)
+join (select * from  unnest (array[54,59,62]) with ordinality as respuestas(valor, llave)) as aux using (llave)
 returning *
 ;
 
@@ -263,6 +265,19 @@ end;
 $$ language plpgsql ;
 
 select * from get_permisos_faltantes (1,1);
+
+drop function get_preguntas_esp ;
+CREATE or replace function get_preguntas_esp (id_esp int )
+returns TABLE (id_espc int, tipo tipos_input  )
+as $$ 
+begin
+return query 
+select id_preg,p.tipo  from pregunta p where p.id_especialidad =id_esp  ;
+end;
+$$ language plpgsql ;
+
+select * from get_preguntas_esp (13);
+
 
 
 CREATE or replace function insert_permisos (id_doct int, id_paciente int , lista int[])

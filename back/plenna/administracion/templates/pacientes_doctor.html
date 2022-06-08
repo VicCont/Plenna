@@ -63,7 +63,7 @@
           <tr>
             <td>    
                 {% if tipo == 0 %}
-                <a href="{% url 'administracion:consulta_custionarios' nom_pac=i.1 id_pac=i.0 %}">{{ i.2 }}</a>            </td>
+                <a href="{% url 'administracion:consulta_cuestionarios' nom_pac=i.1 id_pac=i.0 %}">{{ i.2 }}</a>            </td>
                 {% elif tipo == 1 %}
                 <a href="{% url 'administracion:consulta_insight'  id_pac=i.0 nombre=i.1 %}">{{ i.2 }}</a>            </td>
                 {% elif tipo == 2  %}

@@ -1,4 +1,5 @@
 from django.db import connection
+from django.conf import settings
 
 def get_permisos(id_doc,id_pac):
     retorno=[]
@@ -6,6 +7,37 @@ def get_permisos(id_doc,id_pac):
         cursor.execute('''select * from get_permisos(%s,%s)''',[id_doc,id_pac])
         retorno=cursor.fetchall()
     return retorno
+
+def actualiza_cuestionario(request,id_esp,id_pac):
+    ids_ab=[]
+    ids_cerr=[]
+    resp_ab=[]
+    resp_cerr=[]        
+    pregs=get_preguntas_esp(id_esp)
+    tipos=settings.TIPOS
+    for preg in pregs:
+        respondido=request.POST.getlist(str(preg[0]))
+        for i in respondido:
+            if tipos[preg[1]]<=4:
+                resp_ab.append(i)
+                ids_ab.append(preg[0])    
+            else:
+                if i=="otro":
+                    resp_ab.append(request.POST[f'otro{preg[0]}'])
+                    ids_ab.append(preg[0])
+                resp_cerr.append(int(i))
+                ids_cerr.append(int(preg[0]))    
+    with connection.cursor() as cursor:
+        cursor.execute('''select actualiza_resp_abierta(%s,%s,%s,%s)''',[id_pac,ids_ab,resp_ab,id_esp])
+        cursor.execute('''select inserta_resp_cerrada(%s,%s,%s)''',[id_pac,ids_cerr,resp_cerr])
+        cursor.fetchall()
+
+def get_preguntas_esp (id_esp):
+    retorno=[]
+    with connection.cursor() as cursor:
+        cursor.execute('''select * from get_preguntas_esp(%s)''',[id_esp])
+        retorno=cursor.fetchall()
+    return retorno    
 
 def get_permisos_faltantes(id_doc,id_pac):
     retorno=[]

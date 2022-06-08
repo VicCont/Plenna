@@ -90,6 +90,8 @@ DATABASES = {
         }
 }
 
+TIPOS={'number':1, 'text':2, 'date':3,'radio':4,'select':5,'check':6,'check/text':7}
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 

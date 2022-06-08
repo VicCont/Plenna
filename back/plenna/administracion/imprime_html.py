@@ -1,14 +1,17 @@
 import csv
-import string
+from django.conf import settings
+from django.middleware import csrf
 from django.urls import reverse
 from sympy import re
 datos=[]
 
-def generar_form (id_pac,id_esp,nombre):
-    return f'''<form class="form-inline" action="{reverse('administracion:responder_cuestionario',kwargs={'id_esp':id_esp,'id_pac':id_pac,'nom_pac':nombre})}" method="post">'''
+def generar_form (request,id_pac,id_esp,nombre):
+    retorno= f'''<form class="form-inline" action="{reverse('administracion:responder_cuestionario',kwargs={'id_esp':id_esp,'id_pac':id_pac,'nom_pac':nombre})}" method="post">'''
+    retorno+=f'''<input type="hidden" name="csrfmiddlewaretoken" value="{csrf.get_token(request)}">'''
+    return retorno
 
-def formatear(datos,permisos,id_pac,nombre):
-    tipos={'number':1, 'text':2, 'date':3,'radio':4,'select':5,'check':6,'check/text':7}
+def formatear(request,datos,permisos,id_pac,nombre):
+    tipos=settings.TIPOS
     retorno=""
     i=0
     apertura_seccion='<div class="column-grid home-hero">'
@@ -24,7 +27,7 @@ def formatear(datos,permisos,id_pac,nombre):
             id_esp_previo=datos[i][1]
             retorno+=apertura_seccion
             retorno+=f'''<h3>Datos de {datos[i][6]}</h3> <br>'''
-            retorno+=generar_form(id_pac,id_esp_previo,nombre)
+            retorno+=generar_form(request,id_pac,id_esp_previo,nombre)
             if (id_esp_previo in permisos):
                 pendientes+='<br><input id="Submit1" type="submit" value="Actualizar" /><input id="Reset1" type="reset" value="reset" />'
             pendientes+="</form>"
@@ -51,7 +54,7 @@ def formatear(datos,permisos,id_pac,nombre):
 
 
 def imprime_input_radio(datos):
-    return f'<fieldset><legend>{datos[3]}</legend><label><input type="radio" name="{datos[0]}" value="False"> no</label><label>    <input type="radio" name="{datos[0]}" value="True"> si</label></fieldset> <br>  '
+    return f'<fieldset><legend>{datos[3]}</legend><label><input type="radio" {"checked" if datos[2]==0 else ""} name="{datos[0]}" value="False"> no</label><label>    <input type="radio" name="{datos[0]}" {"checked" if datos[2]==1 else ""} value="True"> si</label></fieldset> <br>  '
 
 
 def imprime_input_select(datos,i):
@@ -61,7 +64,7 @@ def imprime_input_select(datos,i):
     while(id_preg==datos[i][0]):
         respuesta=datos[i][4]
         index = respuesta.find(",", 0, len(respuesta))
-        retorno+=f'<option value="{respuesta[0:index]}" >{respuesta[index+1:len(respuesta)]}</option>'
+        retorno+=f'<option value="{respuesta[0:index]}" {"selected" if datos[i][2]==1 else ""} >{respuesta[index+1:len(respuesta)]}</option>'
 
         i+=1
     retorno+="</select><br>"
@@ -73,10 +76,10 @@ def imprime_input_checkbox(datos,i):
     while(id_preg==datos[i][0]):
         respuesta=datos[i][4]
         index = respuesta.find(",", 0, len(respuesta))
-        retorno+=f'<input type="checkbox"  value="{respuesta[0:index]}" > {respuesta[index+1:len(respuesta)]}'
+        retorno+=f'<input type="checkbox" {"checked" if datos[i][2]==1 else ""}  value="{respuesta[0:index]}" > {respuesta[index+1:len(respuesta)]} '
         i+=1
     retorno+="</fieldset><br>"
     return i,retorno
 
 def imprime_input_simple(datos):
-    return f'<label for="{datos[0]}">{datos[3]}</label><input type="{datos[5]}" id="fname" name="{datos[0]}" value="{datos[4]}"><br>'
+    return f'<label for="{datos[0]}">{datos[3]}</label><input type="{datos[5]}" id="fname" name="{datos[0]}" value="{datos[4] if datos[4] is not None else ""}"><br>'
