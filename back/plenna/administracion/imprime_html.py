@@ -76,7 +76,7 @@ def imprime_input_checkbox(datos,i):
     while(id_preg==datos[i][0]):
         respuesta=datos[i][4]
         index = respuesta.find(",", 0, len(respuesta))
-        retorno+=f'<input type="checkbox" {"checked" if datos[i][2]==1 else ""}  value="{respuesta[0:index]}" > {respuesta[index+1:len(respuesta)]} '
+        retorno+=f'<input type="checkbox" {"checked" if datos[i][2]==1 else ""}  value="{respuesta[0:index]}" name="{datos[i][0]}" > {respuesta[index+1:len(respuesta)]} '
         i+=1
     retorno+="</fieldset><br>"
     return i,retorno

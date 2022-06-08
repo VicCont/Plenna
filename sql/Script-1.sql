@@ -52,7 +52,17 @@ values
 (2,1,1),
 (2,1,5)
 
+select * from pregunta p  where tipo <='radio';
 
+select * from obtener_datos (8)
+
+create temp table if not exists ids_borrado as select id_preg_pac  from preg_pac pp join pregunta p using (id_preg ) where p.id_especialidad=13 and id_pac=8;
+delete from res_preg_opc rpo where id_preg_pac in (select * from ids_borrado);
+delete from resp_abierta where id_preg_pac in (select * from ids_borrado);
+delete from preg_pac where id_preg_pac  in (select * from ids_borrado);
+drop table ids_borrado ;
+
+[54,59,62,69]
 insert into doctor (nom_doc,usuario,hash_pass,"admin",id_especialidad)
 values 
 ('doctor 1','doctor 1','basura',false,13),
@@ -66,9 +76,16 @@ select * from obtener_pacientes_doc(6) ;
 
 select * from obtener_datos(1);
 
+select * from res_preg_opc rpo )
+
+select * from pregunta p where tipo>'radio'
+
+INSERT INTO plenna.paciente
+(nombre, clave_pac)
+VALUES('dadadf', 'fsdfasafas');
+select * from paciente p ;
 
 select * from permisos p where id_pac =3;
---insert into preg_pac  (id_preg, id_pac)
---select distinct id_preg, 1 from opc_preg op ;
---insert into res_preg_opc (id_preg_pac,id_opc_preg)
---select id_preg_pac , id_opc_preg from (select distinct on (id_preg) op.id_preg ,pp.id_preg_pac , id_opc_preg  from opc_preg op join preg_pac pp on (pp.id_preg =op.id_preg  and pp.id_pac =1)) as aux;
+insert into preg_pac  (id_preg, id_pac) select distinct id_preg, 8 from opc_preg op ;
+insert into res_preg_opc (id_preg_pac,id_opc_preg)
+select id_preg_pac , id_opc_preg from (select distinct on (id_preg) op.id_preg ,pp.id_preg_pac , id_opc_preg  from opc_preg op join preg_pac pp on (pp.id_preg =op.id_preg  and pp.id_pac =8)) as aux;

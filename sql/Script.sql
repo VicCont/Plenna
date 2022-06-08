@@ -222,6 +222,21 @@ join (select * from  unnest (list_ids_resp) with ordinality as respuestas(valor,
 end;
 $$ language plpgsql ;
 
+create or replace function  actualiza_resp_abierta(id int, lista_preg int[], list_ids_resp varchar [],  id_esp int)
+returns void 
+as $$
+begin 
+create temp table if not exists ids_borrado as select id_preg_pac  from preg_pac pp join pregunta p using (id_preg ) where p.id_especialidad=id_esp and id_pac=id;
+delete from res_preg_opc rpo where id_preg_pac in (select * from ids_borrado);
+delete from resp_abierta where id_preg_pac in (select * from ids_borrado);
+delete from preg_pac where id_preg_pac  in (select * from ids_borrado);
+drop table ids_borrado ;
+perform inserta_preg_pac_abierta(id,lista_preg,list_ids_resp);
+end;
+$$ language plpgsql ;
+
+
+select actualiza_resp_abierta  (8,array [31, 32, 33, 37, 38],array ['armanda', '34', 'estudiante', 'True', '333'], 13)
 
 select inserta_preg_pac_abierta (1,array [6,8,9,10,12,17,18,20,22,24,28,30],array ['hola','adios','meperdonas','bimbo','owo','prueba','respuesta 3','respuesta 7'])
 
