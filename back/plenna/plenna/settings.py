@@ -80,14 +80,16 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'plenna',
-        'OPTIONS': {
-                'options': '-c search_path=plenna'
-            },        
+       
         'USER': 'postgres',
         'PASSWORD': 'n0m3l0',
         'HOST': '3.229.90.61',
         'PORT': '5432',
-        }
+        'TEST':{        'OPTIONS': {'options':''},  }      
+        },
+        'OPTIONS': {
+                'options': '-c search_path=plenna'
+            },         
 }
 
 TIPOS={'number':1, 'text':2, 'date':3,'radio':4,'select':5,'check':6,'check/text':7}
