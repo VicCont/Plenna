@@ -61,3 +61,19 @@ from permiso_doc_pac join especialidad e using (id_especialidad)
 select p.nombre as nom_pac, i.comentario, d.nom_doc
 from doctor d join insight i using (id_doctor)
 join paciente p using (id_pac)
+
+--preguntas de una especialidad en un paciente
+with res as (
+	with preg_pac_resp as (
+		with pregunta_paciente as (
+			select pp.id_preg_pac, p.nombre, p2.pregunta, p2.id_especialidad
+			from paciente p join preg_pac pp using (id_pac)
+			join pregunta p2 using (id_preg)
+		) 
+		select pregunta_paciente.nombre, pregunta_paciente.pregunta, pregunta_paciente.id_especialidad, ra.resp_preg
+		from pregunta_paciente join resp_abierta ra using(id_preg_pac)
+	)
+	select e.nombre_esp, preg_pac_resp.nombre, preg_pac_resp.pregunta, preg_pac_resp.resp_preg
+	from preg_pac_resp join especialidad e using(id_especialidad)
+)
+select * from res where nombre_esp = 'Ficha Personal' and nombre='armanda2'
