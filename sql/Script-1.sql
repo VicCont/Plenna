@@ -35,10 +35,8 @@ SELECT [3,3,4,56];
 
 
 update permisos set activo =false  where id_doctor =1 and id_pac =2 and id_especialidad = any(array [2,4,5])
-
 insert into permisos (id_doctor, id_pac,id_especialidad)
-select 1 ,2 ,e.id_especialidad  from especialidad e left join permisos p ON (id_pac=3 and id_doctor =1 and p.id_especialidad=e.id_especialidad) where id_permiso is null and e.id_especialidad = any(array [2,4,5]);
-
+select 1,3 ,e.id_especialidad  from especialidad e left join permisos p ON (id_pac=3 and id_doctor =1 and p.id_especialidad=e.id_especialidad) where id_permiso is null and e.id_especialidad = any(array [2,4,5,1]);
 
 
 
@@ -57,13 +55,19 @@ values
 
 insert into doctor (nom_doc,usuario,hash_pass,"admin",id_especialidad)
 values 
-('doctor 1','doctor 1','basura',false,1),
-('doctor 2','doctor 2','basura',true,1)
+('doctor 1','doctor 1','basura',false,13),
+('doctor 2','doctor 2','basura',true,13)
 
 select *,p.tipo from pregunta p ;
 
+select * from doctor p ;
+
+select * from obtener_pacientes_doc(6) ;
+
+select * from obtener_datos(1);
 
 
+select * from permisos p where id_pac =3;
 --insert into preg_pac  (id_preg, id_pac)
 --select distinct id_preg, 1 from opc_preg op ;
 --insert into res_preg_opc (id_preg_pac,id_opc_preg)

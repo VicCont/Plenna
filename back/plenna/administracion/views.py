@@ -173,7 +173,7 @@ def consulta_cuestionario(request,id_pac,nom_pac):
         return redirect("administracion:vista_pacientes")
     pregs=obtener_datos(id_pac)
     perms=get_permisos(id,id_pac)
-    perms=[x[0] for x in perms]
+    perms={x[0]:x[1] for x in perms}
     imprimible=formatear(pregs,perms,id_pac,nom_pac)
     contexto={'id_pac':id_pac,'cuestionario':imprimible,'is_admin':bool_from_String(request.COOKIES.get('is_admin')),'nombre':nom_pac}
     return render(request,'cuestionario.html',contexto)

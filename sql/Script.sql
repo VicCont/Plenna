@@ -43,28 +43,6 @@ LANGUAGE plpgsql;
 	and p.id_pac =2
 	and p.activo ;
 
-CREATE or replace function   del_permiso (id_d int, id_p int,id_es int )
- returns void 
- as
-$$
-begin
-update permisos  set activo =false where id_doctor =id_d and id_pac =id_p and id_especialidad =id_es ;
-END;
- $$
-LANGUAGE plpgsql;
-
-CREATE or replace function   set_permiso (id_d int, id_p int,id_es int )
- returns void 
- as
-$$
-begin
-insert into permisos (id_doctor,id_pac,id_especialidad) values
-(id_d,id_p,id_es);
-END;
- $$
-LANGUAGE plpgsql;
-
-
 
 CREATE or replace function   is_authorized (doc int, pac int )
  returns boolean
@@ -197,20 +175,22 @@ LANGUAGE plpgsql;
 
 select * from obtener_pacientes_doc(1);
 
+
 drop function obtener_datos ;
 CREATE or replace function   obtener_datos (id int )
- returns TABLE (id_preg int, id_especialidad int, respondidad int, pregunta varchar, resp_preg varchar, tipo tipos_input) 
+ returns TABLE (id_preg int, id_especialidad int, respondidad int, pregunta varchar, resp_preg varchar, tipo tipos_input,nom_espe varchar) 
  as
 $$
 begin
 	return query
-select p.id_preg ,p.id_especialidad , case when ra.resp_preg is not null then 1 else 0 end respondida,p.pregunta,ra.resp_preg,p.tipo  
+select p.id_preg ,p.id_especialidad , case when ra.resp_preg is not null then 1 else 0 end respondida,p.pregunta,ra.resp_preg,p.tipo, esp.nombre_esp  
 from resp_abierta ra join preg_pac pp on (pp.id_pac=id and pp.id_preg_pac =ra.id_preg_pac) right join pregunta p using (id_preg) 
+join especialidad esp on esp.id_especialidad =p.id_especialidad 
 where p.tipo <'select'
 union all
-select op.id_preg,p.id_especialidad , case when pp.id_pac  is not null then 1 else 0 end respondida,p.pregunta,op.id_opc_preg ||','||op.resp_opc_preg , p.tipo 
+select op.id_preg,p.id_especialidad , case when pp.id_pac  is not null then 1 else 0 end respondida,p.pregunta,op.id_opc_preg ||','||op.resp_opc_preg , p.tipo ,esp.nombre_esp  
 from res_preg_opc rpo join preg_pac pp on (rpo.id_preg_pac=pp.id_preg_pac and pp.id_pac=id) right join opc_preg op using (id_opc_preg)
-join pregunta p on (op.id_preg =p.id_preg)
+join pregunta p on (op.id_preg =p.id_preg) join especialidad esp on esp.id_especialidad =p.id_especialidad 
 order by 1;
 END;
  $$

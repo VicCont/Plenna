@@ -5,7 +5,7 @@ from sympy import re
 datos=[]
 
 def generar_form (id_pac,id_esp,nombre):
-    return f'''<form action="{reverse('administracion:responder_cuestionario',kwargs={'id_esp':id_esp,'id_pac':id_pac,'nom_pac':nombre})}" method="post">'''
+    return f'''<form class="form-inline" action="{reverse('administracion:responder_cuestionario',kwargs={'id_esp':id_esp,'id_pac':id_pac,'nom_pac':nombre})}" method="post">'''
 
 def formatear(datos,permisos,id_pac,nombre):
     tipos={'number':1, 'text':2, 'date':3,'radio':4,'select':5,'check':6,'check/text':7}
@@ -13,20 +13,22 @@ def formatear(datos,permisos,id_pac,nombre):
     i=0
     apertura_seccion='<div class="column-grid home-hero">'
     pendientes=""
-    cierre_seccion='</div>'
+    cierre_seccion='</div><br><br>'
     id_esp_previo=0
-    retorno+=apertura_seccion
     while (i<len(datos)):
         if ( id_esp_previo!=datos[i][1]):
             retorno+=pendientes
             pendientes=""
             if (id_esp_previo!=0):
                 retorno+=cierre_seccion
-            retorno+=apertura_seccion
             id_esp_previo=datos[i][1]
+            retorno+=apertura_seccion
+            retorno+=f'''<h3>Datos de {datos[i][6]}</h3> <br>'''
+            retorno+=generar_form(id_pac,id_esp_previo,nombre)
             if (id_esp_previo in permisos):
-                retorno+=generar_form(id_pac,id_esp_previo,nombre)
-                pendientes+='<br><input id="Submit1" type="submit" value="Actualizar" /><input id="Reset1" type="reset" value="reset" /></form>'
+                pendientes+='<br><input id="Submit1" type="submit" value="Actualizar" /><input id="Reset1" type="reset" value="reset" />'
+            pendientes+="</form>"
+        retorno+='  <div><div class="form-group string optional bc_search_last_name"></div></div>'
         if (tipos[str(datos[i][5])]<=3):
             retorno+=imprime_input_simple(datos[i])
             i+=1
@@ -41,6 +43,7 @@ def formatear(datos,permisos,id_pac,nombre):
             aux=imprime_input_checkbox(datos,i)
             i=aux[0]
             retorno+=str(aux[1])
+        retorno+="<br>"
     retorno+=cierre_seccion
     return retorno 
 
